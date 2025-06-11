@@ -1,0 +1,41 @@
+name: IP Range Processor
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch:  # Allows manual triggering
+  push:
+    branches:
+      - main
+
+jobs:
+  process-ips:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Run IP processor
+      run: |
+        python scripts/ip_processor.py
+        
+    - name: Commit changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add ir.txt nl.txt
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update IP range files [skip ci]"
+        git push
