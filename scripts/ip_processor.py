@@ -48,7 +48,8 @@ def save_to_file(filename, cidr_list):
             f.write(f"{cidr}\n")
 
 def main():
-    url = "https://raw.githubusercontent.com/sapics/ip-location-db/refs/heads/main/iplocate-country/iplocate-country-ipv4.csv"
+    # url = "https://raw.githubusercontent.com/sapics/ip-location-db/refs/heads/main/iplocate-country/iplocate-country-ipv4.csv"
+    url = "https://raw.githubusercontent.com/sapics/ip-location-db/refs/heads/main/user-country/user-country-ipv4.csv"
     countries = ['IR']
     output_dir = Path.cwd()
     
